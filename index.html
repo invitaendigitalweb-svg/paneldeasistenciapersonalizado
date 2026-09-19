@@ -109,7 +109,6 @@ body{
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:600px;
 }
 
 thead th{
@@ -177,14 +176,14 @@ tbody tr.cancelado{ opacity:0.55; background:#f9ecec; }
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  margin:2px 3px;
+  margin:2px 4px;
   cursor:pointer;
-  min-width:28px;
+  min-width:32px;
 }
 
 .pase-check .check{
-  width:20px;
-  height:20px;
+  width:22px;
+  height:22px;
   accent-color:#68764f;
   cursor:pointer;
   margin:0;
@@ -193,8 +192,9 @@ tbody tr.cancelado{ opacity:0.55; background:#f9ecec; }
 .numero-pase{
   display:block;
   margin-top:2px;
-  font-size:9px;
+  font-size:10px;
   color:#8c5d5d;
+  font-weight:500;
 }
 
 .vacio{
@@ -232,12 +232,77 @@ tbody tr.cancelado{ opacity:0.55; background:#f9ecec; }
   background:#fdf0e9;
 }
 
+/* === DISEÑO ADAPTABLE Y ESTILOS PARA CELULAR === */
 @media(max-width:600px){
-  body{padding:15px 9px 30px}
-  .tarjeta{padding:20px 14px;border-radius:20px}
-  .titulo{font-size:36px}
-  .estadisticas{grid-template-columns:repeat(2,1fr); gap:6px}
+  body{padding:12px 6px 25px}
+  .tarjeta{padding:16px 12px;border-radius:18px}
+  .titulo{font-size:32px;margin-bottom:12px}
+  .estadisticas{grid-template-columns:repeat(2,1fr); gap:8px; margin:14px 0}
+  .estadistica{padding:10px 6px}
+  .estadistica strong{font-size:22px}
+  .estadistica span{font-size:8.5px}
   .controles{flex-direction:column}
+
+  /* Transformación de tabla a Tarjetas en móvil */
+  .tabla-wrap{border:none; overflow:visible}
+  table, thead, tbody, th, td, tr { display: block; }
+  thead { display: none; } /* Oculta encabezados de tabla tradicional */
+
+  tbody tr {
+    background: #fff;
+    border: 1px solid #e2d2c8;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 4px 12px rgba(90,37,37,.05);
+    position: relative;
+  }
+
+  tbody tr.cancelado {
+    background: #fdf5f5;
+  }
+
+  tbody td {
+    border: none;
+    padding: 6px 0;
+    text-align: left !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Formato del Nombre del Invitado */
+  tbody td:first-child {
+    border-bottom: 1px solid #f2e6df;
+    padding-bottom: 8px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .nombre {
+    font-size: 20px;
+  }
+
+  /* Etiquetas automáticas antes de cada valor */
+  tbody td:nth-child(2)::before { content: "Confirmación:"; font-size: 11px; color: #8c5d5d; font-weight: 500; }
+  tbody td:nth-child(3)::before { content: "Pases asignados:"; font-size: 11px; color: #8c5d5d; font-weight: 500; }
+  tbody td:nth-child(4)::before { content: "Entrada evento:"; font-size: 11px; color: #8c5d5d; font-weight: 500; }
+
+  .estado {
+    min-width: auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .pase-check {
+    margin: 2px 4px;
+  }
+
+  .pie {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
 }
 </style>
 </head>
@@ -259,11 +324,11 @@ tbody tr.cancelado{ opacity:0.55; background:#f9ecec; }
       </div>
       <div class="estadistica">
         <strong id="totalPases">0</strong>
-        <span>Pases Confirmados</span>
+        <span>Pases Asignados</span>
       </div>
       <div class="estadistica">
         <strong id="totalPresentes">0</strong>
-        <span>En el evento</span>
+        <span>Entrada el día del evento</span>
       </div>
     </div>
 
@@ -280,7 +345,7 @@ tbody tr.cancelado{ opacity:0.55; background:#f9ecec; }
             <th>Invitado / Familia</th>
             <th>Confirmación</th>
             <th>Pases</th>
-            <th>Entrada en Puerta</th>
+            <th>Entrada el día del evento</th>
           </tr>
         </thead>
         <tbody id="lista"></tbody>
